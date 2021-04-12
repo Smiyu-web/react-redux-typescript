@@ -12,6 +12,7 @@ interface AppProps {
 interface AppState {
   fetching: boolean;
 }
+
 class _App extends Component<AppProps, AppState> {
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(props: AppProps) {
@@ -32,9 +33,17 @@ class _App extends Component<AppProps, AppState> {
     this.setState({ fetching: true });
   };
 
+  deleteItem = (index: number): void => {
+    this.props.clearTodos(index);
+  };
+
   renderList(): JSX.Element[] {
     return this.props.todos.map((todo: Todo) => {
-      return <div key={todo.id}>{todo.title}</div>;
+      return (
+        <div key={todo.id} onClick={() => this.deleteItem(todo.id)}>
+          {todo.title}
+        </div>
+      );
     });
   }
 
